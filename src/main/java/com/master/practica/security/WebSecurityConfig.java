@@ -34,7 +34,7 @@ public class WebSecurityConfig {
 	@Bean
 	public DaoAuthenticationProvider authenticationProvider() {
 		DaoAuthenticationProvider authProvider = new DaoAuthenticationProvider();
-
+		
 		authProvider.setUserDetailsService(userDetailsService);
 		authProvider.setPasswordEncoder(passwordEncoder());
 
@@ -50,17 +50,33 @@ public class WebSecurityConfig {
 	public PasswordEncoder passwordEncoder() {
 		return new BCryptPasswordEncoder();
 	}
+	
+//	@Bean
+//	public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
+//		http.cors().and().csrf().disable()
+//				.exceptionHandling().authenticationEntryPoint(unauthorizedHandler).and()
+//				.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS).and()
+//				.authorizeHttpRequests()
+//				.requestMatchers("/api/auth/**").permitAll() //Public
+//				.requestMatchers("/library/books/partial/").permitAll() //Public
+//				.requestMatchers("/library/books/**").permitAll() //Public
+//				.anyRequest().authenticated(); //Private
+//		http.authenticationProvider(authenticationProvider());
+//		http.addFilterBefore(authenticationJwtTokenFilter(), UsernamePasswordAuthenticationFilter.class);
+//		return http.build();
+//	}
+	
 	@Bean
-	public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
-		http.cors().and().csrf().disable()
-				.exceptionHandling().authenticationEntryPoint(unauthorizedHandler).and()
-				.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS).and()
-				.authorizeHttpRequests()
-				.requestMatchers("/library/books/partial/").permitAll() //Public
-				.requestMatchers("/library/books/**").permitAll() //Public
-				.anyRequest().authenticated(); //Private
-		http.authenticationProvider(authenticationProvider());
-		http.addFilterBefore(authenticationJwtTokenFilter(), UsernamePasswordAuthenticationFilter.class);
-		return http.build();
-	}
+	  public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
+	    http.cors().and().csrf().disable()
+	        .exceptionHandling().authenticationEntryPoint(unauthorizedHandler).and()
+	        .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS).and()
+	        .authorizeHttpRequests()
+	          .requestMatchers("/api/auth/**").permitAll() //Public
+	          .requestMatchers("/api/test/**").permitAll() //Public
+	        .anyRequest().authenticated(); //Private
+	    http.authenticationProvider(authenticationProvider());
+	    http.addFilterBefore(authenticationJwtTokenFilter(), UsernamePasswordAuthenticationFilter.class);
+	    return http.build();
+	  }
 }
