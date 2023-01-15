@@ -72,8 +72,12 @@ public class WebSecurityConfig {
 	        .exceptionHandling().authenticationEntryPoint(unauthorizedHandler).and()
 	        .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS).and()
 	        .authorizeHttpRequests()
-	          .requestMatchers("/api/auth/**").permitAll() //Public
-	          .requestMatchers("/api/test/**").permitAll() //Public
+	          .requestMatchers("/api/auth/**").permitAll()
+//	          .requestMatchers("/library/books/").permitAll()
+//	          .requestMatchers("/library/books/partial/").permitAll()
+//	          .requestMatchers("/library/books/*").permitAll()
+	          .requestMatchers("/library/books/**").permitAll()
+	          .requestMatchers("/library/reviews/**").permitAll()
 	        .anyRequest().authenticated(); //Private
 	    http.authenticationProvider(authenticationProvider());
 	    http.addFilterBefore(authenticationJwtTokenFilter(), UsernamePasswordAuthenticationFilter.class);

@@ -10,7 +10,6 @@ import org.mapstruct.Mapper;
 import com.master.practica.dto.ReviewDto;
 import com.master.practica.dto.RoleDto;
 import com.master.practica.dto.UserDto;
-import com.master.practica.model.Role;
 import com.master.practica.model.User;
 
 @Mapper(componentModel = "spring")
@@ -28,7 +27,7 @@ public interface UserMapper {
 
         id = user.getId();
         username = user.getUsername();
-        mail = user.getMail();
+        mail = user.getEmail();
 
         if (user.getReviews().isEmpty()) {
             reviews = Collections.emptyList();

@@ -1,6 +1,6 @@
 package com.master.practica.controller;
 
-import java.util.HashSet;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
@@ -28,7 +28,6 @@ import com.master.practica.repository.RoleRepository;
 import com.master.practica.repository.UserRepository;
 import com.master.practica.security.jwt.JwtUtils;
 import com.master.practica.security.service.UserDetailsImpl;
-
 
 @CrossOrigin(origins = "*", maxAge = 3600)
 @RestController
@@ -67,6 +66,51 @@ public class AuthController {
                          userDetails.getUsername(),
                          userDetails.getPassword(),
                          roles));
+  }
+  
+  @PostMapping("/signup")
+  public ResponseEntity<?> registerUser(@RequestBody SignupRequest signUpRequest) {
+    if (userRepository.existsByUsername(signUpRequest.getUsername())) {
+      return ResponseEntity
+          .badRequest()
+          .body(new MessageResponse("Error: Username is already taken!"));
+    }
+
+    if (userRepository.existsByEmail(signUpRequest.getEmail())) {
+      return ResponseEntity
+          .badRequest()
+          .body(new MessageResponse("Error: Email is already in use!"));
+    }
+
+    // Create new user's account
+    User user = new User(signUpRequest.getUsername(),
+               signUpRequest.getEmail(),
+               encoder.encode(signUpRequest.getPassword()));
+
+    List<String> strRoles = signUpRequest.getRole();
+    List<Role> roles = new ArrayList<>();
+
+    if (strRoles == null) {
+      Role userRole = roleRepository.findByName("USER");
+      roles.add(userRole);
+    } else {
+      strRoles.forEach(role -> {
+        switch (role) {
+        case "admin":
+          Role adminRole = roleRepository.findByName("ADMIN");
+          roles.add(adminRole);
+          break;
+        default:
+          Role userRole = roleRepository.findByName("USER");
+          roles.add(userRole);
+        }
+      });
+    }
+
+    user.setRoles(roles);
+    userRepository.save(user);
+
+    return ResponseEntity.ok(new MessageResponse("User registered successfully!"));
   }
 
 }

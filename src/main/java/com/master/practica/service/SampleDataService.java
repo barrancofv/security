@@ -1,5 +1,8 @@
 package com.master.practica.service;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -27,12 +30,24 @@ public class SampleDataService {
 	
 	@PostConstruct
 	public void init() {
+		
+		Role r1 = new Role();
+		r1.setName("ADMIN");
+		Role r2 = new Role();
+		r2.setName("USER");
+		rolService.save(r1);
+		rolService.save(r2);
+		
+		
+		List<Role> roles = new ArrayList<>();
+		roles.add(r1);
 
 		User p = new User();
 		p.setUsername("Pepe");
-		p.setMail("pepe@gmail.com");
+		p.setEmail("pepe@gmail.com");
 		p.setPassword("$2a$12$QyTxXohd5RzP/iAQHtPhU.IZhAAqtKmcX/kPzubhkr2Jaa93BPkSK");
 		p.setEnabled(true);
+		p.setRoles(roles);
 		userService.save(p);
 		
 		Book b = new Book();
@@ -48,15 +63,9 @@ public class SampleDataService {
 		r.setUsername("Pepe");
 		reviewService.save(r, 1, 1);
 		
-		Role r1 = new Role();
-		r1.setName("ADMIN");
-		Role r2 = new Role();
-		r2.setName("USER");
 		
-		rolService.save(r1);
-		rolService.save(r2);
 		
-		userService.addRoleToUser("Pepe", "ADMIN");
+		
 		
 	}
 }

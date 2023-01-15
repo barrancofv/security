@@ -19,7 +19,7 @@ public class User {
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private long id;
 	private String username;
-	private String mail;
+	private String email;
 	private String password;
 	private boolean enabled;
 
@@ -31,6 +31,15 @@ public class User {
 
 	public User() {
 	}
+	
+	public User(String username, String email, String password) {
+		this.username = username;
+		this.email = email;
+		this.password = password;
+		this.enabled = true;
+	}
+
+
 
 	public long getId() {
 		return id;
@@ -48,12 +57,12 @@ public class User {
 		this.username = name;
 	}
 
-	public String getMail() {
-		return mail;
+	public String getEmail() {
+		return email;
 	}
 
-	public void setMail(String mail) {
-		this.mail = mail;
+	public void setEmail(String email) {
+		this.email = email;
 	}
 
 	public void addReview(Review review) {
