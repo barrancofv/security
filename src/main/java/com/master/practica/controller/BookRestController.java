@@ -38,6 +38,7 @@ public class BookRestController {
 	}
 
 	@GetMapping(value="/{bookId}")
+	@PreAuthorize("hasAuthority('USER') or hasAuthority('ADMIN')")
 	public ResponseEntity<BookDto> getBook(@PathVariable(value = "bookId") Long id) {
 		return bookService.findById(id);
 	}

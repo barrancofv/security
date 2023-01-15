@@ -73,11 +73,9 @@ public class WebSecurityConfig {
 	        .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS).and()
 	        .authorizeHttpRequests()
 	          .requestMatchers("/api/auth/**").permitAll()
-//	          .requestMatchers("/library/books/").permitAll()
-//	          .requestMatchers("/library/books/partial/").permitAll()
-//	          .requestMatchers("/library/books/*").permitAll()
-	          .requestMatchers("/library/books/**").permitAll()
-	          .requestMatchers("/library/reviews/**").permitAll()
+	          .requestMatchers("/library/books/").permitAll()
+	          .requestMatchers("/library/books/partial/").permitAll()
+	          .requestMatchers("/library/books/*").permitAll()
 	        .anyRequest().authenticated(); //Private
 	    http.authenticationProvider(authenticationProvider());
 	    http.addFilterBefore(authenticationJwtTokenFilter(), UsernamePasswordAuthenticationFilter.class);
