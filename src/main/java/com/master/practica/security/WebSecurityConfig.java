@@ -76,6 +76,8 @@ public class WebSecurityConfig {
 	          .requestMatchers("/library/books/").permitAll()
 	          .requestMatchers("/library/books/partial/").permitAll()
 	          .requestMatchers("/library/books/*").permitAll()
+	          .requestMatchers("/library/reviews/*").permitAll()
+	          .requestMatchers("/library/reviews/*/*").permitAll()
 	        .anyRequest().authenticated(); //Private
 	    http.authenticationProvider(authenticationProvider());
 	    http.addFilterBefore(authenticationJwtTokenFilter(), UsernamePasswordAuthenticationFilter.class);

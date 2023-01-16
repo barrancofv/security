@@ -18,7 +18,7 @@ public class Book {
 	private String editorial;
 	private String date;
 
-	@OneToMany(mappedBy = "book", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.EAGER)
+	@OneToMany(mappedBy = "book", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
 	private List<Review> reviews = new ArrayList<>();
 
 	public Book() {

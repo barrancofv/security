@@ -50,18 +50,21 @@ public class SampleDataService {
 		p.setRoles(roles);
 		userService.save(p);
 		
+		Review r = new Review();
+		r.setComment("El libro es una maravilla");
+		r.setRate(5);
+		r.setUsername("Pepe");
+		
+		List<Review> reviews = new ArrayList<>();
+		reviews.add(r);
+		
 		Book b = new Book();
 		b.setTitle("Reina Roja");
 		b.setArgument("Es un libro de misterio");
 		b.setEditorial("Planeta");
 		b.setDate("2022");
+		b.setReviews(reviews);
 		bookService.save(b);
-		
-		Review r = new Review();
-		r.setComment("El libro es una maravilla");
-		r.setRate(5);
-		r.setUsername("Pepe");
-		reviewService.save(r, 1, 1);
 		
 		
 		

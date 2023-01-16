@@ -55,7 +55,7 @@ public class BookRestController {
 	}
 	
 	@DeleteMapping("/{id}")
-	@PreAuthorize("hasRole('ROLE_USER') or hasRole('ROLE_ADMIN')")
+	@PreAuthorize("hasRole('ROLE_ADMIN')")
 	public ResponseEntity<BookDto> deleteBook(@PathVariable long id) {
 		return bookService.deleteById(id);
 	}

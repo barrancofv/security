@@ -34,7 +34,7 @@ public class ReviewController {
 	}
 
 	@GetMapping("/{id}")
-	@PreAuthorize("hasAuthority('USER') or hasAuthority('ADMIN')")
+	@PreAuthorize("hasRole('ROLE_USER') or hasRole('ROLE_ADMIN')")
 	public ResponseEntity<ReviewDto> getReview(@PathVariable long id) {
 		return reviewService.findById(id);
 	}
@@ -45,7 +45,7 @@ public class ReviewController {
 	}
 	
 	@PostMapping("/{userId}/{bookId}")
-	@PreAuthorize("hasAuthority('USER') or hasAuthority('ADMIN')")
+	@PreAuthorize("hasRole('ROLE_USER') or hasRole('ROLE_ADMIN')")
 	public ResponseEntity<Review> createReview(@RequestBody ReviewDto reviewDto, @PathVariable long userId, @PathVariable long bookId) {
 		return reviewService.createReview(reviewDto, userId, bookId);
 	}
@@ -56,7 +56,7 @@ public class ReviewController {
 	}
 	
 	@DeleteMapping("/{id}")
-	//@PreAuthorize("hasAuthority('ADMIN')")
+	@PreAuthorize("hasRole('ROLE_ADMIN')")
 	public ResponseEntity<ReviewDto> deleteReview(@PathVariable long id) {
 		return reviewService.deleteById(id);
 	}
