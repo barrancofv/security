@@ -27,7 +27,7 @@ public class BookRestController {
 	private BookService bookService;
 	
 	@GetMapping(value="/")
-	@PreAuthorize("hasAuthority('USER') or hasAuthority('ADMIN')")
+	@PreAuthorize("hasRole('ROLE_USER') or hasRole('ROLE_ADMIN')")
 	public ResponseEntity<Page<BookDto>> getBooks(Pageable page) {
 		return bookService.findAll(page);
 	}
@@ -38,13 +38,13 @@ public class BookRestController {
 	}
 
 	@GetMapping(value="/{bookId}")
-	@PreAuthorize("hasAuthority('USER') or hasAuthority('ADMIN')")
+	@PreAuthorize("hasRole('ROLE_USER') or hasRole('ROLE_ADMIN')")
 	public ResponseEntity<BookDto> getBook(@PathVariable(value = "bookId") Long id) {
 		return bookService.findById(id);
 	}
 	
 	@PostMapping("/")
-	@PreAuthorize("hasAuthority('USER') or hasAuthority('ADMIN')")
+	@PreAuthorize("hasRole('ROLE_USER') or hasRole('ROLE_ADMIN')")
 	public ResponseEntity<Book> createBook(@RequestBody BookDto book) {
 		return bookService.createBook(book);
 	}
@@ -55,6 +55,7 @@ public class BookRestController {
 	}
 	
 	@DeleteMapping("/{id}")
+	@PreAuthorize("hasRole('ROLE_USER') or hasRole('ROLE_ADMIN')")
 	public ResponseEntity<BookDto> deleteBook(@PathVariable long id) {
 		return bookService.deleteById(id);
 	}

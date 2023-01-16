@@ -32,9 +32,9 @@ public class SampleDataService {
 	public void init() {
 		
 		Role r1 = new Role();
-		r1.setName("ADMIN");
+		r1.setName("ROLE_ADMIN");
 		Role r2 = new Role();
-		r2.setName("USER");
+		r2.setName("ROLE_USER");
 		rolService.save(r1);
 		rolService.save(r2);
 		
